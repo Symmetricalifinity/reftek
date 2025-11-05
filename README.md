@@ -20,4 +20,4 @@ Please keep in mind that this is not an art tool, rather, it makes the process o
 # Support 
 If you need help and support, join the **PuzzylPiece Software Division** Discord server at https://discord.gg/R3YxgZxa2m
 
-If you'd like to support me financially, [here's my Ko-fi](ko-fi.com/puzzylpiece).
+If you'd like to support me financially, [here's my Ko-fi](https://ko-fi.com/puzzylpiece).
