@@ -1,12 +1,7 @@
 # ATTENTION!!!
 
-My friend Nova pointed out that on Windows, scrollbars appear on the sections, even if they don't scroll. To address this until I release the next Reftek update, add this to `reftek-base.css`.
+My friend Nova pointed out that on Windows, scrollbars appear on the sections, even if they don't scroll. To address this until I release the next Reftek update, please download the ZIP from here instead of the release tag
 
-```css
-::-webkit-scrollbar {
-    display: none;
-}
-```
 
 ![alt text](https://github.com/puzzylpiece/reftek/raw/refs/heads/main/readme-images/logo.svg "Reftek logo")
 
