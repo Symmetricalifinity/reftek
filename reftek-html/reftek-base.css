@@ -120,7 +120,6 @@
         border-radius: var(--radius);
         height: calc(100vh - (var(--margins) * 3));
         box-shadow: var(--shadow-x) var(--shadow-y) var(--shadow-blur) var(--shadow-color);
-        overflow: scroll;
     }
 
     section .data {
