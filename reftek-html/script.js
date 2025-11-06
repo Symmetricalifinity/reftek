@@ -106,7 +106,7 @@ function spawnInThings() {
         }
     }
     const createdUsingMessage = document.createElement("h6");
-    createdUsingMessage.innerHTML = "<a href='https://puzzylpiece.xyz/reftek/'>Created using Reftek</a>"
+    createdUsingMessage.innerHTML = "<a href='https://puzzylpiece.xyz/reftek/'>Created using Reftek (alpha II)</a>"
     dataSection.appendChild(createdUsingMessage)
 
     if (angleToggles.length != 1) {
