@@ -66,9 +66,7 @@ function setupCharacters() {
 			characters[c].colors = []
 		}
 	}
-	if (!showOutfits) {
-		document.getElementById("anglesSection").classList.add("no-outfit")
-	}
+	updOutfitSection(showOutfits)
 }
 
 function preloadEverything() {
@@ -275,6 +273,9 @@ function spawnInThings(init) {
 	} else {
 		hideTxt.style.display = "none";
 	}
+
+	updOutfitSection(characters[charIndex].outfits.length > 0)
+
 	if (characters[charIndex].colors.length > 0) {
 		colorHeader.style.display = "";
 		colorTable.style.display = "";
@@ -343,8 +344,10 @@ function updateImages() {
 		anglePic.style.backgroundImage = `url(${(characters[charIndex].angles[characters[charIndex].angleIndex][1]).slice(0, -4)}_${characters[charIndex].angleToggles[characters[charIndex].angleToggleIndex]}.png)`;
 	}
 	angleTxt.innerText = characters[charIndex].angles[characters[charIndex].angleIndex][0];
-	outfitPic.style.backgroundImage = `url(${characters[charIndex].outfits[characters[charIndex].outfitIndex][1]})`;
-	outfitTxt.innerText = characters[charIndex].outfits[characters[charIndex].outfitIndex][0];
+	if (characters[charIndex].outfits.length > 0) {
+		outfitPic.style.backgroundImage = `url(${characters[charIndex].outfits[characters[charIndex].outfitIndex][1]})`;
+		outfitTxt.innerText = characters[charIndex].outfits[characters[charIndex].outfitIndex][0];
+	}
 	updateColorTable()
 }
 function updateColorTable() {
@@ -422,4 +425,14 @@ function nextCharacter() {
 
 function copyColorToClipboard(colorIndex) {
 	navigator.clipboard.writeText(characters[charIndex].colors[colorIndex][0]);
+}
+
+function updOutfitSection(b) {
+	if (b) {
+		document.getElementById("outfitsSection").style.display = "";
+		document.getElementById("anglesSection").classList.remove("no-outfit")
+	} else {
+		document.getElementById("outfitsSection").style.display = "none";
+		document.getElementById("anglesSection").classList.add("no-outfit")
+	}
 }
