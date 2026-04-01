@@ -72,7 +72,7 @@ function setupCharacters() {
 }
 
 function preloadEverything() {
-	if (usePreload) {
+	if (typeof preloadAssets === "undefined" || preloadAssets) {
 		var images = [];
 
 		function preload() {

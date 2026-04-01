@@ -80,4 +80,4 @@ const options = {
 };
 
 // ADVANCED
-const usePreload = true
+const preloadAssets = true
