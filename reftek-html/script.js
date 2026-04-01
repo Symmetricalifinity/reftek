@@ -6,6 +6,9 @@ const infoTableInner = infoTable.innerHTML
 const colorHeader = document.getElementById("colorHeader")
 const colorTable = document.getElementById("colorTable")
 const colorTableInner = colorTable.innerHTML
+const charHeader = document.getElementById("charHeader")
+const charTable = document.getElementById("charTable")
+const charTableInner = charTable.innerHTML
 const anglePic = document.getElementById("angleguy")
 const angleForm = document.getElementById("angleToggles")
 const angleFormInner = angleForm.innerHTML
@@ -69,24 +72,26 @@ function setupCharacters() {
 }
 
 function preloadEverything() {
-	var images = [];
+	if (usePreload) {
+		var images = [];
 
-	function preload() {
-		for (var i = 0; i < arguments.length; i++) {
-			images[i] = new Image();
-			images[i].src = preload.arguments[i];
-		}
-	}
-	for (let c = 0; c < characters.length; c++) {
-		for (let i = 0; i < characters[c].angles.length; i++) {
-			preload(characters[c].angles[i][1]);
-			for (let j = 1; j < characters[c].angleToggles.length; j++) {
-				preload(`${(characters[c].angles[i][1]).slice(0, -4)}_${characters[c].angleToggles[j]}.png`);
+		function preload() {
+			for (var i = 0; i < arguments.length; i++) {
+				images[i] = new Image();
+				images[i].src = preload.arguments[i];
 			}
 		}
-		if (showOutfits) {
-			for (let i = 0; i < characters[c].outfits.length; i++) {
-				preload(characters[c].outfits[i][1]);
+		for (let c = 0; c < characters.length; c++) {
+			for (let i = 0; i < characters[c].angles.length; i++) {
+				preload(characters[c].angles[i][1]);
+				for (let j = 1; j < characters[c].angleToggles.length; j++) {
+					preload(`${(characters[c].angles[i][1]).slice(0, -4)}_${characters[c].angleToggles[j]}.png`);
+				}
+			}
+			if (showOutfits) {
+				for (let i = 0; i < characters[c].outfits.length; i++) {
+					preload(characters[c].outfits[i][1]);
+				}
 			}
 		}
 	}
@@ -130,18 +135,63 @@ function spawnInThings(init) {
 			document.getElementById("btn6").style.display = "none";
 			charSel.classList.remove("selector2")
 		}
+
+		charTable.innerHTML = charTableInner
+		if (characters.length > 1) {
+			charHeader.style.display = "";
+			charTable.style.display = "";
+			for (let i = 0; i < characters.length; i++) {
+				const newCharRow = document.createElement("tr");
+				const newCharTitle = document.createElement("td");
+				if (characters[i].title[0] == "i") {
+					newCharTitleContent = document.createElement("img");
+					newCharTitleContent.src = characters[i].title[1];
+					newCharTitleContent.style.height = "1em"
+				} else {
+					newCharTitleContent = document.createTextNode(characters[i].title[1]);
+				}
+				newCharTitle.appendChild(newCharTitleContent);
+				const newCharGoto = document.createElement("td");
+				const newCharGotoButton = document.createElement("button");
+				newCharGotoButton.innerText = "VIEW"
+				newCharGotoButton.addEventListener('click', function() {
+					if (i != charIndex) {
+						anglePic.animate(i < charIndex ? keyframesLeft : keyframesRight, options);
+						outfitPic.animate(i < charIndex ? keyframesLeft : keyframesRight, options);
+						changeCharacter(i);
+						console.log(characters[charIndex])
+					}
+				});
+				newCharGoto.appendChild(newCharGotoButton);
+				newCharRow.appendChild(newCharTitle);
+				newCharRow.appendChild(newCharGoto);
+				newCharRow.id = "charRow";
+				charTable.appendChild(newCharRow)
+			}
+		} else {
+			charHeader.style.display = "none";
+			charTable.style.display = "none";
+		}
 	}
 
 	if (characters[charIndex].angles.length == 1) {
 		document.getElementById("btn1").style.display = "none";
 		document.getElementById("btn2").style.display = "none";
 		angleSel.classList.add("single-item")
+	} else {
+		document.getElementById("btn1").style.display = "";
+		document.getElementById("btn2").style.display = "";
+		angleSel.classList.remove("single-item")
 	}
 	if (showOutfits) {
 		if (characters[charIndex].outfits.length == 1) {
 			document.getElementById("btn3").style.display = "none";
 			document.getElementById("btn4").style.display = "none";
 			outfitSel.classList.add("single-item")
+		} else {
+			document.getElementById("btn3").style.display = "";
+			document.getElementById("btn4").style.display = "";
+			outfitSel.classList.remove("single-item")
 		}
 	} else {
 		document.getElementById("outfitsSection").style.display = "none";
@@ -228,7 +278,7 @@ function spawnInThings(init) {
 	if (characters[charIndex].colors.length > 0) {
 		colorHeader.style.display = "";
 		colorTable.style.display = "";
-		for (let i = 0; i < (characters[charIndex].colors.length); i++) {
+		for (let i = 0; i < characters[charIndex].colors.length; i++) {
 			const newColorRow = document.createElement("tr");
 			if (characters[charIndex].colors[i][1] == "h") {
 				const newHeading = document.createElement("td");
