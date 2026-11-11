@@ -423,6 +423,26 @@ function nextCharacter() {
 	outfitPic.animate(keyframesRight, options);
 }
 
+window.onpageshow = () => {
+	window.onhashchange()
+}
+
+window.onhashchange = () => {
+	let n = characters.map((a)=>a.title[0] == "t" ? a.title[1] : "").indexOf(location.hash.substring(1))
+	if (n < 0) {
+		let h = location.hash.match(/[0-9]+/)
+		if (h != null) {
+			let hn = Number(h) - 1
+			let cl = characters.length
+			if (typeof hn !== "undefined") {
+				changeCharacter(((hn % cl) + cl) % cl)
+			}
+		}
+	} else {
+		changeCharacter(n)
+	}
+}
+
 function copyColorToClipboard(colorIndex) {
 	navigator.clipboard.writeText(characters[charIndex].colors[colorIndex][0]);
 }
